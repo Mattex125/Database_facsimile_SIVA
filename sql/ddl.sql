@@ -292,23 +292,55 @@ FOR EACH ROW EXECUTE FUNCTION hash_password();
 --Vincolo 3
 CREATE OR REPLACE FUNCTION chk_stipendio_admin()
 RETURNS TRIGGER AS $$
+DECLARE
+  v_idcentro INTEGER;
+  v_cf CHAR(16);
 BEGIN
+  -- chiamata da SUPERVISIONE
+  IF TG_TABLE_NAME = 'supervisione' THEN
+    v_idcentro := NEW.IdCentro;
+    v_cf := NEW.CF;
+  ELSE
+    -- chiamata da PROFESSIONISTA
+    v_idcentro := NEW.IdCentro;
+    v_cf := NEW.CF;
+
+    -- se non è supervisore, esci
+    IF NOT EXISTS (
+      SELECT 1 FROM SUPERVISIONE WHERE CF = v_cf
+    ) THEN
+      RETURN NEW;
+    END IF;
+  END IF;
+
   IF (
-    SELECT StipendioNetto FROM PROFESSIONISTA WHERE CF = NEW.CF
+    SELECT StipendioNetto
+    FROM PROFESSIONISTA
+    WHERE CF = v_cf
   ) <= (
     SELECT MAX(StipendioNetto)
     FROM PROFESSIONISTA
-    WHERE IdCentro = NEW.IdCentro AND CF <> NEW.CF
+    WHERE IdCentro = v_idcentro
+      AND CF <> v_cf
   ) THEN
     RAISE EXCEPTION 'Stipendio amministratore non valido';
   END IF;
+
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER trg_chk_stipendio_admin
+--called when Amministratore e' assegnato a un determinato centro
+CREATE TRIGGER trg_chk_stipendio_admin_sup
 AFTER INSERT OR UPDATE ON SUPERVISIONE
-FOR EACH ROW EXECUTE FUNCTION chk_stipendio_admin();
+FOR EACH ROW
+EXECUTE FUNCTION chk_stipendio_admin();
+--called when professionista cambia stipendio
+CREATE TRIGGER trg_chk_stipendio_admin_prof
+BEFORE UPDATE OF StipendioNetto ON PROFESSIONISTA
+FOR EACH ROW
+EXECUTE FUNCTION chk_stipendio_admin();
+
 --Vincolo 4
 CREATE OR REPLACE FUNCTION chk_supervisione()
 RETURNS TRIGGER AS $$
@@ -326,3 +358,53 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER trg_chk_supervisione
 BEFORE INSERT OR UPDATE ON SUPERVISIONE
 FOR EACH ROW EXECUTE FUNCTION chk_supervisione();
+--Vincolo 5 verra garantito dalla procedura di creazione richiesta ausilio
+
+--Corretteza dati derivati 
+--N ausili disponibili in AUSILIO
+CREATE OR REPLACE FUNCTION ricalcola_ausili_disponibili()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  UPDATE AUSILIO
+  SET NumeroAusiliDisponibili = (
+    SELECT COUNT(*)
+    FROM AUSILIO_EFFETTIVO
+    WHERE CodiceISO = COALESCE(NEW.CodiceISO, OLD.CodiceISO)
+  )
+  WHERE CodiceISO = COALESCE(NEW.CodiceISO, OLD.CodiceISO);
+
+  RETURN NULL;
+END;
+$$;
+
+--N professionisti in CENTRO
+CREATE OR REPLACE FUNCTION ricalcola_num_professionisti()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  UPDATE CENTRO
+  SET NumProfessionisti = (
+    SELECT COUNT(*)
+    FROM APPARTENENZA_CR
+    WHERE IdCentro = COALESCE(NEW.IdCentro, OLD.IdCentro)
+  )
+  WHERE IdCentro = COALESCE(NEW.IdCentro, OLD.IdCentro);
+
+  RETURN NULL;
+END;
+$$;
+--chiamata trigger per garantire correttezza dati derivati
+-- AUSILIO_EFFETTIVO → aggiorna NumeroAusiliDisponibili
+CREATE TRIGGER trg_ricalcola_ausili_ins
+AFTER INSERT OR DELETE OR UPDATE ON AUSILIO_EFFETTIVO
+FOR EACH ROW EXECUTE FUNCTION ricalcola_ausili_disponibili();
+
+-- APPARTENENZA_CR → aggiorna NumProfessionisti
+CREATE TRIGGER trg_ricalcola_prof_ins
+AFTER INSERT OR DELETE OR UPDATE ON APPARTENENZA_CR
+FOR EACH ROW EXECUTE FUNCTION ricalcola_num_professionisti();
+
+--mancano funz con interfaccie, viste e dati effettivi
