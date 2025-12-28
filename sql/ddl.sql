@@ -254,3 +254,75 @@ ON EROGAZIONE (CF);
 CREATE INDEX IF NOT EXISTS idx_scrittura_cf
 ON SCRITTURA (CF);
 
+--CHECK constraints
+--Vincolo 1
+ALTER TABLE PROFESSIONISTA
+ADD CONSTRAINT chk_stipendio_prof_min
+CHECK (StipendioNetto >= 1400);
+--Vincolo 2
+CREATE OR REPLACE FUNCTION chk_password_len()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF length(NEW.Password) < 4 THEN
+    RAISE EXCEPTION 'Password troppo corta';
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_chk_password_len
+BEFORE INSERT OR UPDATE ON UTENTE_REGISTRATO
+FOR EACH ROW EXECUTE FUNCTION chk_password_len();
+--Vincolo 2.1 hashing password
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+CREATE OR REPLACE FUNCTION hash_password()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NEW.Password NOT LIKE '$2%' THEN
+    NEW.Password := crypt(NEW.Password, gen_salt('bf'));
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_hash_password
+BEFORE INSERT OR UPDATE OF Password ON UTENTE_REGISTRATO
+FOR EACH ROW EXECUTE FUNCTION hash_password();
+--Vincolo 3
+CREATE OR REPLACE FUNCTION chk_stipendio_admin()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF (
+    SELECT StipendioNetto FROM PROFESSIONISTA WHERE CF = NEW.CF
+  ) <= (
+    SELECT MAX(StipendioNetto)
+    FROM PROFESSIONISTA
+    WHERE IdCentro = NEW.IdCentro AND CF <> NEW.CF
+  ) THEN
+    RAISE EXCEPTION 'Stipendio amministratore non valido';
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_chk_stipendio_admin
+AFTER INSERT OR UPDATE ON SUPERVISIONE
+FOR EACH ROW EXECUTE FUNCTION chk_stipendio_admin();
+--Vincolo 4
+CREATE OR REPLACE FUNCTION chk_supervisione()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM PROFESSIONISTA
+    WHERE CF = NEW.CF AND IdCentro = NEW.IdCentro
+  ) THEN
+    RAISE EXCEPTION 'Centro non valido';
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_chk_supervisione
+BEFORE INSERT OR UPDATE ON SUPERVISIONE
+FOR EACH ROW EXECUTE FUNCTION chk_supervisione();

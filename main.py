@@ -4,6 +4,10 @@ from pathlib import Path
 import psycopg
 from dotenv import load_dotenv
 
+#built-path per gestire DB
+BASE_DIR = Path(__file__).parent
+SQL_DIR = BASE_DIR / "sql"
+
 def main():
     load_dotenv() #get virtual env 
     dsn = os.getenv("DATABASE_URL")
@@ -22,9 +26,7 @@ def main():
         run_queries(conn)
     print("Completato con successo.")
 
-#built path per gestire DB
-BASE_DIR = Path(__file__).parent
-SQL_DIR = BASE_DIR / "sql"
+
 
 def read_sql(filename: str) -> str:
     return (SQL_DIR / filename).read_text(encoding="utf-8")
@@ -53,7 +55,5 @@ def run_queries(conn: psycopg.Connection) -> None:
         else:
             print("Nessun risultato trovato")
         
-        
-
 if __name__ == "__main__":
     main()
