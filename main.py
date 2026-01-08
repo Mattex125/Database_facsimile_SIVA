@@ -24,6 +24,8 @@ def main():
 
         # 3) querys
         run_queries(conn)
+        #run_sql(conn, "queries.sql")
+        
     print("Completato con successo.")
 
 def read_sql(filename: str) -> str:
@@ -35,23 +37,13 @@ def run_sql(conn: psycopg.Connection, filename: str) -> None:
         cur.execute(sql) #exe query (MUST BE DDL OR DML Plssss!)
 
 def run_queries(conn: psycopg.Connection) -> None:
-    #session
-    with conn.cursor() as cur:
-        Nquery = 1
-        #query lanciata
-        cur.execute(""" 
-            select * from AZIENDA;
-        """)
-        print("query number:", Nquery)
-        Nquery += 1
-        result = cur.fetchall()#sql response
-        if result: 
-            i=0
-            for row in result:
-                print(i, "-->", row)
-                i += 1
-        else:
-            print("Nessun risultato trovato")
-        
+    with conn.cursor() as cur: #sessione
+        for q in read_sql("querys.sql").split(';'):
+            if not (q := q.strip()): continue
+            cur.execute(q) 
+            if cur.description:
+                print([d[0] for d in cur.description])
+                for r in cur.fetchall(): print(r) #print results
+
 if __name__ == "__main__":
     main()

@@ -1,3 +1,4 @@
+BEGIN; --per rendere gli inserimenti una operazione unica
 -- INSERT INTO ...
 --AZIENDA (PartitaIVA, RagioneSociale, Telefono, Email, StatoCollaborazione)
 INSERT INTO AZIENDA (PartitaIVA, RagioneSociale, Telefono, Email, StatoCollaborazione)
@@ -113,29 +114,12 @@ INSERT INTO SVOLGIMENTO (IdVisita, ID, Certificato) VALUES
 (3, 1, TRUE),
 (4, 2, TRUE),
 (5, 3, FALSE),
-(6, 4, TRUE),
-(7, 5, TRUE);
--- Visite
-INSERT INTO VISITA (Data, Ora, IdCentro, CF) VALUES
-('2025-11-20', '09:00:00', 1, 'BNCGPP75M01F205R'),
-('2025-11-20', '11:00:00', 1, 'GLLMRA92A01H501Z'),
-('2025-11-21', '15:30:00', 3, 'RSSMRA80A01H501V'),
-('2025-11-22', '10:00:00', 3, 'NRTFNC85B01F205T'),
-('2025-11-22', '12:00:00', 2, 'VRDLRA88S41L219J'),
-('2026-01-05', '08:30:00', 4, 'BRBFRC90C01L219Y');
-
--- Svolgimento (Colleghiamo le visite agli utenti registrati)
--- Nota: IdVisita segue l'ordine di inserimento (dal 3 in poi se hai già eseguito i precedenti)
-INSERT INTO SVOLGIMENTO (IdVisita, ID, Certificato) VALUES
-(3, 1, TRUE),
-(4, 2, TRUE),
-(5, 3, FALSE),
-(6, 4, TRUE),
-(7, 5, TRUE);
-
+(6, 4, TRUE);
 INSERT INTO SEGNALAZIONE (Titolo, Descrizione, ID, CodiceISO) VALUES
 ('Batteria poco duratura', 'La carica della carrozzina scende troppo velocemente dopo 2 ore', 2, '12.22.18'),
 ('Difficoltà montaggio', 'Le istruzioni del letto ortopedico non sono chiare per il montaggio sponde', 4, '18.09.39'),
 ('Rumore meccanico', 'Il sollevatore emette un fischio durante la discesa', 5, '12.06.06'),
 ('Richiesta aggiornamento software', 'Il comunicatore vocale necessita di nuove voci in italiano', 1, '22.36.03'),
 ('Piedini instabili', 'La sedia per doccia scivola leggermente sul piatto doccia', 2, '09.03.03');
+
+commit;
