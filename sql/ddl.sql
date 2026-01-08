@@ -238,9 +238,6 @@ ON VISITA (IdCentro);
 CREATE INDEX IF NOT EXISTS idx_svolgimento_id
 ON SVOLGIMENTO (ID);
 
-CREATE INDEX IF NOT EXISTS idx_erogazione_cf
-ON EROGAZIONE (CF);
-
 CREATE INDEX IF NOT EXISTS idx_scrittura_cf
 ON SCRITTURA (CF);
 
@@ -398,4 +395,4 @@ AFTER INSERT OR DELETE OR UPDATE OF IdCentro
 ON PROFESSIONISTA
 FOR EACH ROW EXECUTE FUNCTION ricalcola_num_professionisti();
 
---mancano funz con interfaccie, viste e dati effettivi
+--funz di scegliere coso

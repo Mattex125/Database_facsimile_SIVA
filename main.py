@@ -26,8 +26,6 @@ def main():
         run_queries(conn)
     print("Completato con successo.")
 
-
-
 def read_sql(filename: str) -> str:
     return (SQL_DIR / filename).read_text(encoding="utf-8")
 
