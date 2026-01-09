@@ -1,4 +1,3 @@
-
 --ricerca di ausilii per un codice iso
 SELECT * FROM AUSILIO_EFFETTIVO WHERE CodiceISO = '12.03.03';
 
@@ -81,3 +80,15 @@ GROUP BY C.NOME;
 SELECT IDVISITA, NOME_PROFESSIONISTA, COGNOME_PROFESSIONISTA, NOME_CENTRO, NOME_UTENTE, COGNOME_UTENTE 
 FROM SPECIFICHE_VISITA SP, SUPERVISIONE S
 WHERE SP.CF=S.CF;
+
+--testing funz
+SELECT CodiceISO, NumeroAusiliDisponibili
+FROM AUSILIO
+WHERE CodiceISO = '12.03.03';
+
+-- Utente 1 richiede ausilio '12.03.03'
+CALL esegui_richiesta(5, '12.03.03');
+
+SELECT CodiceISO, NumeroAusiliDisponibili
+FROM AUSILIO
+WHERE CodiceISO = '12.03.03';

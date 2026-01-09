@@ -97,27 +97,27 @@ INSERT INTO MATERIALE (Nome) VALUES
 ('Neoprene'), 
 ('Gel Poliuretanico');
 
-INSERT INTO AUSILIO (CodiceISO, Nome, Categoria, Dimensione, Descrizione, Prezzo, PartitaIVA, NumeroAusiliDisponibili) VALUES
-('09.03.03', 'Sedia per Doccia Ergo', 'Igiene', 'Media', 'Sedia con schienale e braccioli idrorepellenti', 120.00, '11122233344', 45),
-('12.22.18', 'Carrozzina Elettronica Power', 'Mobilità', 'Grande', 'Motore 250W, autonomia 30km', 3450.00, '22233344455', 8),
-('12.03.03', 'Stampelle Canadesi (Coppia)', 'Mobilità', 'Regolabile', 'In alluminio leggero con impugnatura soft', 35.00, '33344455566', 120),
-('18.09.39', 'Letto Ortopedico Elettrico', 'Arredo', 'Singolo', '4 snodi, regolazione altezza elettrica', 1150.00, '11122233344', 12),
-('04.33.03', 'Orologio Braille', 'Comunicazione', 'Piccola', 'Orologio tattile per non vedenti', 85.00, '55566677788', 25),
-('22.36.03', 'Comunicatore Vocale Lite', 'Comunicazione', 'Standard', 'Sintesi vocale con touchscreen 10 pollici', 890.00, '33344455566', 15),
-('12.06.06', 'Sollevatore a soffitto', 'Sollevamento', 'Custom', 'Sistema a binario per camera da letto', 2100.00, '66677788899', 3),
-('06.03.06', 'Protesi d''anca modulare', 'Protesica', 'Variabile', 'Componente femorale in titanio con inserto ceramico', 4500.00, '11223344556', 15),
+INSERT INTO AUSILIO (CodiceISO, Nome, Categoria, Dimensione, Descrizione, Prezzo, PartitaIVA) VALUES --NUMERO AUSILI DISPONIBILI DAFULT 0
+('09.03.03', 'Sedia per Doccia Ergo', 'Igiene', 'Media', 'Sedia con schienale e braccioli idrorepellenti', 120.00, '11122233344'),
+('12.22.18', 'Carrozzina Elettronica Power', 'Mobilità', 'Grande', 'Motore 250W, autonomia 30km', 3450.00, '22233344455'),
+('12.03.03', 'Stampelle Canadesi (Coppia)', 'Mobilità', 'Regolabile', 'In alluminio leggero con impugnatura soft', 35.00, '33344455566'),
+('18.09.39', 'Letto Ortopedico Elettrico', 'Arredo', 'Singolo', '4 snodi, regolazione altezza elettrica', 1150.00, '11122233344'),
+('04.33.03', 'Orologio Braille', 'Comunicazione', 'Piccola', 'Orologio tattile per non vedenti', 85.00, '55566677788'),
+('22.36.03', 'Comunicatore Vocale Lite', 'Comunicazione', 'Standard', 'Sintesi vocale con touchscreen 10 pollici', 890.00, '33344455566'),
+('12.06.06', 'Sollevatore a soffitto', 'Sollevamento', 'Custom', 'Sistema a binario per camera da letto', 2100.00, '66677788899'),
+('06.03.06', 'Protesi d''anca modulare', 'Protesica', 'Variabile', 'Componente femorale in titanio con inserto ceramico', 4500.00, '11223344556'),
 
-('12.23.03', 'Scooter Elettrico 4 Ruote', 'Mobilità', 'Grande', 'Scooter da esterno con sedile rotante e cestino', 1850.00, '22334455667', 10),
-('21.45.06', 'Monitor Pressione Parlante', 'Diagnostica', 'Piccola', 'Sfigmomanometro automatico con guida vocale', 65.00, '33445566778', 60),
-('18.12.07', 'Cuscino Antidecubito Air', 'Postura', 'Standard', 'Cuscino a celle d''aria a microclima controllato', 320.00, '44556677889', 30),
-('22.06.03', 'Apparecchio Acustico Digital', 'Udito', 'Mini', 'Endoauricolare invisibile con riduzione rumore', 1200.00, '55667788990', 20),
-('06.06.03', 'Esoscheletro Riabilitativo', 'Riabilitazione', 'Custom', 'Sistema robotizzato per assistenza al cammino', 15000.00, '66778899001', 2),
-('22.21.09', 'Tastiera Espansa USB', 'Informatica', 'Grande', 'Tastiera a tasti grandi con colori ad alto contrasto', 145.00, '77889900112', 40),
-('04.48.03', 'Pedaliera Riabilitativa', 'Esercizio', 'Media', 'Pedaliera da tavolo/pavimento con display LCD', 55.00, '88990011223', 55),
-('12.12.03', 'Sollevatore Idraulico', 'Spostamento', 'Standard', 'Base a larghezza regolabile con imbracatura inclusa', 980.00, '99001122334', 7),
-('09.33.03', 'Maniglione di Sicurezza', 'Bagno', '60cm', 'In acciaio inox con rivestimento antiscivolo', 45.00, '00112233445', 100),
-('12.36.03', 'Rampe Pieghevoli (Coppia)', 'Accessibilità', '2 metri', 'Rampe in alluminio per superamento gradini', 210.00, '12345678901', 12),
-('12.24.06', 'Stabilizzatore Verticale', 'Statica', 'Adulto', 'Tavolo servoassistito per statica eretta', 2400.00, '44455566677', 5);
+('12.23.03', 'Scooter Elettrico 4 Ruote', 'Mobilità', 'Grande', 'Scooter da esterno con sedile rotante e cestino', 1850.00, '22334455667'),
+('21.45.06', 'Monitor Pressione Parlante', 'Diagnostica', 'Piccola', 'Sfigmomanometro automatico con guida vocale', 65.00, '33445566778'),
+('18.12.07', 'Cuscino Antidecubito Air', 'Postura', 'Standard', 'Cuscino a celle d''aria a microclima controllato', 320.00, '44556677889'),
+('22.06.03', 'Apparecchio Acustico Digital', 'Udito', 'Mini', 'Endoauricolare invisibile con riduzione rumore', 1200.00, '55667788990'),
+('06.06.03', 'Esoscheletro Riabilitativo', 'Riabilitazione', 'Custom', 'Sistema robotizzato per assistenza al cammino', 15000.00, '66778899001'),
+('22.21.09', 'Tastiera Espansa USB', 'Informatica', 'Grande', 'Tastiera a tasti grandi con colori ad alto contrasto', 145.00, '77889900112'),
+('04.48.03', 'Pedaliera Riabilitativa', 'Esercizio', 'Media', 'Pedaliera da tavolo/pavimento con display LCD', 55.00, '88990011223'),
+('12.12.03', 'Sollevatore Idraulico', 'Spostamento', 'Standard', 'Base a larghezza regolabile con imbracatura inclusa', 980.00, '99001122334'),
+('09.33.03', 'Maniglione di Sicurezza', 'Bagno', '60cm', 'In acciaio inox con rivestimento antiscivolo', 45.00, '00112233445'),
+('12.36.03', 'Rampe Pieghevoli (Coppia)', 'Accessibilità', '2 metri', 'Rampe in alluminio per superamento gradini', 210.00, '12345678901'),
+('12.24.06', 'Stabilizzatore Verticale', 'Statica', 'Adulto', 'Tavolo servoassistito per statica eretta', 2400.00, '44455566677');
 
 INSERT INTO COMPOSIZIONE (CodiceISO, IdMateriale, Peso) VALUES
 -- Sedia per Doccia Ergo (Plastica + Alluminio)
@@ -204,8 +204,9 @@ INSERT INTO AUSILIO_EFFETTIVO (EventualiNote, CodiceISO) VALUES
 -- Carrozzina Elettronica Power (12.22.18) - 1 unità
 ('Batteria nuova, testata 01/2024', '12.22.18'),
 
--- Stampelle Canadesi (12.03.03) - 3 unità
+-- Stampelle Canadesi (12.03.03) - 4 unità
 ('Colore Blu', '12.03.03'),
+('Colore Rosso', '12.03.03'),
 ('Colore Grigio', '12.03.03'),
 ('Regolata per altezza media 1.75m', '12.03.03'),
 

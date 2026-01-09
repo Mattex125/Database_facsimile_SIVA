@@ -395,4 +395,47 @@ AFTER INSERT OR DELETE OR UPDATE OF IdCentro
 ON PROFESSIONISTA
 FOR EACH ROW EXECUTE FUNCTION ricalcola_num_professionisti();
 
---funz di scegliere coso
+--funz di scegliere ausiio
+DROP PROCEDURE IF EXISTS esegui_richiesta(INT, VARCHAR);
+DROP PROCEDURE IF EXISTS esegui_richiesta(INT, VARCHAR, INT);
+
+CREATE OR REPLACE PROCEDURE esegui_richiesta(
+  id_utente INT,
+  iso VARCHAR
+)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  disponibili INT;
+  nuova_richiesta INT;
+BEGIN
+  -- 1) Controllo disponibilità (almeno 1)
+  SELECT COUNT(*) INTO disponibili
+  FROM AUSILIO_EFFETTIVO
+  WHERE CodiceISO = iso;
+
+  IF disponibili < 1 THEN
+    RAISE EXCEPTION 'Nessun ausilio disponibile per il codice %', iso;
+  END IF;
+
+  -- 2) Creo nuova RICHIESTA_AUSILIO
+  INSERT INTO RICHIESTA_AUSILIO (Data, ID)
+  VALUES (CURRENT_DATE, id_utente)
+  RETURNING IdRichiesta INTO nuova_richiesta;
+
+  -- 3) Creo RICHIESTO
+  INSERT INTO RICHIESTO (IdRichiesta, CodiceISO)
+  VALUES (nuova_richiesta, iso);
+
+  -- 4) Consumo 1 ausilio effettivo
+  DELETE FROM AUSILIO_EFFETTIVO
+  WHERE NumeroArt = (
+    SELECT NumeroArt
+    FROM AUSILIO_EFFETTIVO
+    WHERE CodiceISO = iso
+    LIMIT 1
+  );
+
+  -- 5) Il trigger ricalcola NumeroAusiliDisponibili
+END;
+$$;
