@@ -538,4 +538,25 @@ INSERT INTO SVOLGIMENTO (IdVisita, ID, Certificato) VALUES
 (18, 18, TRUE),  -- Visita 18 per Utente 18 (Francesca Donati a Palermo)
 (19, 19, FALSE), -- Visita 19 per Utente 19 (Riccardo Vitali a Palermo)
 (20, 20, TRUE);
+
+INSERT INTO SEGNALAZIONE (Titolo, Descrizione, ID, CodiceISO) VALUES
+('Segnalazione di Sedia per Doccia Ergo', 'Sedile idrorepellente con braccioli per assistenza durante l igiene personale.', 45, '09.03.03'),
+('Segnalazione di Carrozzina Elettronica Power', 'Dispositivo motorizzato per la mobilità autonoma con autonomia di 30km.', 12, '12.22.18'),
+('Segnalazione di Stampelle Canadesi (Coppia)', 'Supporti in alluminio leggero per assistenza alla deambulazione.', 189, '12.03.03'),
+('Segnalazione di Letto Ortopedico Elettrico', 'Letto a 4 snodi con regolazione elettrica dell altezza e della postura.', 77, '18.09.39'),
+('Segnalazione di Orologio Braille', 'Dispositivo tattile per la lettura dell orario da parte di non vedenti.', 34, '04.33.03'),
+('Segnalazione di Comunicatore Vocale Lite', 'Sistema con sintesi vocale e touchscreen per la comunicazione assistita.', 156, '22.36.03'),
+('Segnalazione di Sollevatore a soffitto', 'Sistema a binario per il sollevamento e trasferimento in camera da letto.', 92, '12.06.06'),
+('Segnalazione di Protesi d anca modulare', 'Componente protesica in titanio e ceramica per chirurgia ortopedica.', 21, '06.03.06'),
+('Segnalazione di Scooter Elettrico 4 Ruote', 'Veicolo da esterno con sedile rotante per mobilità assistita.', 110, '12.23.03'),
+('Segnalazione di Monitor Pressione Parlante', 'Sfigmomanometro automatico con guida vocale per ipovedenti.', 68, '21.45.06'),
+('Segnalazione di Cuscino Antidecubito Air', 'Cuscino a celle d aria per la prevenzione delle piaghe da decubito.', 199, '18.12.07'),
+('Segnalazione di Apparecchio Acustico Digital', 'Dispositivo endoauricolare invisibile per il miglioramento dell udito.', 5, '22.06.03'),
+('Segnalazione di Esoscheletro Riabilitativo', 'Sistema robotizzato avanzato per la riabilitazione del cammino.', 143, '06.06.03'),
+('Segnalazione di Tastiera Espansa USB', 'Tastiera ad alto contrasto con tasti grandi per agevolare la digitazione.', 88, '22.21.09'),
+('Segnalazione di Pedaliera Riabilitativa', 'Attrezzo con display LCD per esercizio fisico e riabilitazione motoria.', 27, '04.48.03'),
+('Segnalazione di Sollevatore Idraulico', 'Dispositivo di sollevamento con base regolabile e imbracatura.', 175, '12.12.03'),
+('Segnalazione di Maniglione di Sicurezza', 'Supporto in acciaio inox antiscivolo per la sicurezza in bagno.', 53, '09.33.03'),
+('Segnalazione di Rampe Pieghevoli (Coppia)', 'Rampe in alluminio per facilitare il superamento di gradini.', 118, '12.36.03'),
+('Segnalazione di Stabilizzatore Verticale', 'Tavolo servoassistito per il mantenimento della postura eretta.', 14, '12.24.06');
 commit;
