@@ -560,3 +560,39 @@ INSERT INTO SEGNALAZIONE (Titolo, Descrizione, ID, CodiceISO) VALUES
 ('Segnalazione di Rampe Pieghevoli (Coppia)', 'Rampe in alluminio per facilitare il superamento di gradini.', 118, '12.36.03'),
 ('Segnalazione di Stabilizzatore Verticale', 'Tavolo servoassistito per il mantenimento della postura eretta.', 14, '12.24.06');
 commit;
+
+
+INSERT INTO AUSILIO_EFFETTIVO (CodiceISO, EventualiNote)
+SELECT 
+    A.CodiceISO, 
+    'Ausilio generato automaticamente per test di carico n. ' || g.id
+FROM 
+    AUSILIO A,
+    generate_series(1, 300) AS g(id); 
+
+
+
+INSERT INTO VISITA (Data, Ora, IdCentro, CF)
+SELECT 
+    '2024-01-01'::date + (random() * 500)::integer,
+    '08:00:00'::time + (random() * interval '10 hours'), 
+    P.IdCentro,
+    P.CF
+FROM 
+    PROFESSIONISTA P,
+    generate_series(1, 30) AS g(id); 
+
+
+
+
+INSERT INTO PROFESSIONISTA (CF, Nome, Cognome, Telefono, Email, Specializzazione, StipendioNetto, IdCentro)
+SELECT 
+    'FAKEUSER' || lpad(g.id::text, 8, '0'), 
+    'NomeFinto' || g.id, 
+    'CognomeFinto' || g.id, 
+    '333' || lpad(g.id::text, 7, '0'),
+    'email_finta' || g.id || '@test.com', 
+    'SpecializzazioneGenerica',
+    1500 + (random() * 3000)::numeric(10,2), 
+    (g.id % 6) + 1 
+FROM generate_series(1, 5000) AS g(id);
