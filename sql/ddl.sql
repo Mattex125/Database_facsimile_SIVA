@@ -409,7 +409,7 @@ DECLARE
   disponibili INT;
   nuova_richiesta INT;
 BEGIN
-  -- 1) Controllo disponibilità (almeno 1)
+  -- Controllo disponibilità (almeno 1)
   SELECT COUNT(*) INTO disponibili
   FROM AUSILIO_EFFETTIVO
   WHERE CodiceISO = iso;
@@ -418,16 +418,16 @@ BEGIN
     RAISE EXCEPTION 'Nessun ausilio disponibile per il codice %', iso;
   END IF;
 
-  -- 2) Creo nuova RICHIESTA_AUSILIO
+  -- Creo nuova RICHIESTA_AUSILIO
   INSERT INTO RICHIESTA_AUSILIO (Data, ID)
   VALUES (CURRENT_DATE, id_utente)
   RETURNING IdRichiesta INTO nuova_richiesta;
 
-  -- 3) Creo RICHIESTO
+  -- Creo RICHIESTO
   INSERT INTO RICHIESTO (IdRichiesta, CodiceISO)
   VALUES (nuova_richiesta, iso);
 
-  -- 4) Consumo 1 ausilio effettivo
+  -- uso 1 ausilio effettivo
   DELETE FROM AUSILIO_EFFETTIVO
   WHERE NumeroArt = (
     SELECT NumeroArt
@@ -435,7 +435,5 @@ BEGIN
     WHERE CodiceISO = iso
     LIMIT 1
   );
-
-  -- 5) Il trigger ricalcola NumeroAusiliDisponibili
 END;
 $$;

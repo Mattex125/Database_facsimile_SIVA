@@ -561,7 +561,7 @@ INSERT INTO SEGNALAZIONE (Titolo, Descrizione, ID, CodiceISO) VALUES
 ('Segnalazione di Stabilizzatore Verticale', 'Tavolo servoassistito per il mantenimento della postura eretta.', 14, '12.24.06');
 commit;
 
-
+/**
 INSERT INTO AUSILIO_EFFETTIVO (CodiceISO, EventualiNote)
 SELECT 
     A.CodiceISO, 
