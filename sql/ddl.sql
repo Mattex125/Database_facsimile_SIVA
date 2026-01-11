@@ -396,9 +396,6 @@ ON PROFESSIONISTA
 FOR EACH ROW EXECUTE FUNCTION ricalcola_num_professionisti();
 
 --funz di scegliere ausiio
-DROP PROCEDURE IF EXISTS esegui_richiesta(INT, VARCHAR);
-DROP PROCEDURE IF EXISTS esegui_richiesta(INT, VARCHAR, INT);
-
 CREATE OR REPLACE PROCEDURE esegui_richiesta(
   id_utente INT,
   iso VARCHAR

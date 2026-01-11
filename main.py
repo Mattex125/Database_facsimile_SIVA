@@ -44,7 +44,7 @@ def run_queries(conn: psycopg.Connection) -> None:
             if cur.description:
                 print([d[0] for d in cur.description])
                 for r in cur.fetchall(): print(r) #print results
-        print()
+            print()
 
 if __name__ == "__main__":
     main()

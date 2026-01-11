@@ -561,7 +561,7 @@ INSERT INTO SEGNALAZIONE (Titolo, Descrizione, ID, CodiceISO) VALUES
 ('Segnalazione di Stabilizzatore Verticale', 'Tavolo servoassistito per il mantenimento della postura eretta.', 14, '12.24.06');
 commit;
 
-/**
+/*
 INSERT INTO AUSILIO_EFFETTIVO (CodiceISO, EventualiNote)
 SELECT 
     A.CodiceISO, 
@@ -596,3 +596,5 @@ SELECT
     1500 + (random() * 3000)::numeric(10,2), 
     (g.id % 6) + 1 
 FROM generate_series(1, 5000) AS g(id);
+
+*/
