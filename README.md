@@ -31,11 +31,11 @@ python -m pip install -r requirements.txt
 4. Crea un file `.env` (esempio):
 
 ```
-POSTGRES_USER=facsimile
+POSTGRES_USER=merollissimo
 POSTGRES_PASSWORD=secret
 POSTGRES_DB=facsimile
 # Stringa di connessione usata da main.py
-DATABASE_URL=postgresql://facsimile:secret@localhost:5432/facsimile
+DATABASE_URL=postgresql://merollissimo:secret@localhost:5432/facsimile
 ```
 
 5. Esegui lo script principale:
@@ -62,18 +62,3 @@ Quindi esegui `python main.py` come sopra.
 - [sql/ddl.sql](sql/ddl.sql)
 - [sql/dati.sql](sql/dati.sql)
 - [sql/querys.sql](sql/querys.sql)
-
-## Suggerimenti e avvertenze
-- `main.py` usa la variabile d'ambiente `DATABASE_URL`; se non impostata lo script termina senza modifiche.
-- I file in `sql/` vengono eseguiti così come sono: verifica il contenuto prima di eseguirli su DB di produzione.
-
-## License
-Questo repository può essere rilasciato con licenza libera (es. MIT). Aggiungere un file `LICENSE` se desideri specificare la licenza.
-
----
-Se vuoi, posso:
-- aggiungere un esempio di `.env.example` nel repository;
-- rendere l'esecuzione di `main.py` più interattiva (argomenti CLI);
-- aggiungere un semplice test o script di inizializzazione.
-
-Fammi sapere cosa preferisci!
